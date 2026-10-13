@@ -48,8 +48,6 @@ fn rating(score: i32) -> &'static str {
     }
 }
 
-
-
 fn main() {
     println!("==== PerfReport (Rust) ====");
     let mut sys = System::new_all();
@@ -87,7 +85,10 @@ fn main() {
         println!("Disk information   : unavailable");
     }
 
-    let findings = Findings { mem_load, disk_used_pct };
+    let findings = Findings {
+        mem_load,
+        disk_used_pct,
+    };
     let score = compute_score(&findings);
     println!("Efficiency score   : {} / 100 ({})", score, rating(score));
     println!("Done.");
@@ -98,20 +99,28 @@ mod tests {
 
     #[test]
     fn healthy_system_scores_100() {
-        let findings = Findings { mem_load: 50, disk_used_pct: 50.0 };
+        let findings = Findings {
+            mem_load: 50,
+            disk_used_pct: 50.0,
+        };
         assert_eq!(compute_score(&findings), 100);
     }
 
     #[test]
     fn high_memory_reduces_score() {
-        let findings = Findings { mem_load: 90, disk_used_pct: 50.0 };
+        let findings = Findings {
+            mem_load: 90,
+            disk_used_pct: 50.0,
+        };
         assert_eq!(compute_score(&findings), 75);
     }
 
     #[test]
     fn high_disk_usage_reduces_score() {
-        let findings = Findings { mem_load: 50, disk_used_pct: 95.0 };
+        let findings = Findings {
+            mem_load: 50,
+            disk_used_pct: 95.0,
+        };
         assert_eq!(compute_score(&findings), 75);
     }
 }
-
